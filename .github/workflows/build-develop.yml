@@ -116,7 +116,7 @@ jobs:
           bump=patch
           if echo "$commits" | grep -E '(^feat\b|BREAKING CHANGE|!\:)' >/dev/null; then bump=minor; fi
           if echo "$commits" | grep -E '(BREAKING CHANGE|!\:)' >/dev/null; then bump=major; fi
-          IFS='.' read -r M m p <<<"$(echo $last_tag | sed 's/^v//;s/\./ /g')"; M=${M:-0}; m=${m:-0}; p=${p:-0}
+          IFS=' ' read -r M m p <<<"$(echo "$last_tag" | sed 's/^v//;s/\./ /g')"; M=${M:-0}; m=${m:-0}; p=${p:-0}
           if [[ "$bump" == major ]]; then M=$((M+1)); m=0; p=0; elif [[ "$bump" == minor ]]; then m=$((m+1)); p=0; else p=$((p+1)); fi
           next="v${M}.${m}.${p}"
           pre="${next}-dev.${GITHUB_RUN_NUMBER}"
